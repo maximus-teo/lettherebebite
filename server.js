@@ -8,7 +8,13 @@ const fetch = require('node-fetch');
 const cors = require('cors');
 const app = express();
 
-app.use(cors());
+// allow requests from gitHub pages
+app.use(cors({
+    origin: 'https://maximus-teo.github.io',
+    methods: ['GET', 'POST'],
+    credentials: true
+}));
+app.options('*', cors()); // enable pre-flight
 app.use(express.json());
 
 const groqApiKey = process.env.GROQ_API_KEY;
@@ -162,4 +168,4 @@ app.post("/api/recipe", async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+app.listen(3000, () => console.log("Server running on port 3000"));
