@@ -84,8 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
             else searchType = "advanced";
         }
 
-        alert(searchType);
-
         const overlay = document.getElementById("loading-overlay");
         overlay.style.display = "flex";
 
@@ -114,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 res = await response.json();
                 recipeData = res.choices[0].message?.content;
-                
+
                 try {
                     test = JSON.parse(recipeData);
                     passed = true;
