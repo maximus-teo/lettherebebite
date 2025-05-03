@@ -1,0 +1,25 @@
+{
+  "name": "ltbb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-server": "node server.js",
+    "start-client": "live-server",
+    "start": "concurrently \"npm run start-client\" \"npm run start-server\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "groq-sdk": "^0.19.0",
+    "live-server": "^1.2.2",
+    "node-fetch": "^2.7.0"
+  }
+}

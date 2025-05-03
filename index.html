@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Let There Be Bite | Home</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Let There Be Bite - Recipe Generator">
+    <meta name="keywords" content="food, recipe, ai, generator, ltbb, online">
+    <meta name="author" content="Maximus Teo">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <title>Let There Be Bite | Recipe Generator</title>
+
+    <script src="https://kit.fontawesome.com/0c648b67fc.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="main.js"></script>
+
+</head>
+</html>
+
+<body>
+    <div id="home-navbar" class="navbar">
+        <a href="./"><img src="images/ltbb_navlogo.png"></a>
+        <nav> 
+            <a class="nav-link" href="./">HOME</a>
+            <a class="nav-link" href="./about">ABOUT</a>
+        </nav>
+    </div>
+
+    <div class="page-container">
+        <img class="img-coverpage" src="images/ltbb_frontpage.png" alt="front image">
+        
+        <div id="search-frontpage">
+            <img src="images/ltbb_logo_yellow.png" alt="logo" oncontextmenu="return false;">
+            <p id="frontpage-tagline">Your Personalised Recipe Generator:<br>What's on your mind?</p>
+            <div>
+                <input id="search-input" type="text" placeholder="I'm thinking of having...">
+                <button id="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div id="search-frontpage-a">
+                <div id="prompt-container">
+                    <i class="far fa-lightbulb" style="margin-top:15px; margin-right:15px;"></i>
+                    <p id="prompt-label"></p>
+                </div>
+                <div id="search-frontpage-options">
+                    <label class="custom-radio">
+                        <input id="basic-search" type="radio" name="options" checked="true">
+                        <span class="radiomark"></span>
+                        Basic Search
+                    </label>
+                    <label class="custom-radio">
+                        <input id="advanced-search" type="radio" name="options">
+                        <span class="radiomark"></span>
+                        Advanced Search
+                    </label>
+                    <label class="custom-checkbox">
+                        <input id="different-cuisines" type="checkbox" name="options">
+                        <span class="checkmark"></span>
+                        Try different cuisines
+                    </label>
+                </div>
+                <input id="advanced-input" type="text" placeholder="Main ingredients to use..." hidden="true">
+            </div>
+        </div>
+        <div id="homepage-info">
+            <div style="margin-top:50px; text-align: center;">
+                <h1>Cook Something New, Anytime.</h1>
+                <p>Tired of the same meals every week? Want something quick, exciting, or totally unexpected?</p>
+                <p>Whether you’re planning dinner, need a fast snack, or want to try a dish from another culture,<br></p>
+                <p><strong><em>Let There Be Bite</em></strong> helps you discover something new.</p>
+                <p>No more digging through old cookbooks or endless scrolling online.</p>
+                <h1 style="margin-top: 80px;">How It Works</h1>
+                <p>A simple 3-step plan to get you started.</p>
+                <div id="homepage-steps-container">
+                    <div class="homepage-info-steps">
+                        <i class="fas fa-user-edit" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                        <h2>Enter a prompt</h2><br>
+                        Describe what you feel like eating: be as specific as you like.
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                    <div class="homepage-info-steps">
+                        <i class="fas fa-list-ol" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                        <h2>Get a list of recipes</h2><br>
+                        Browse tasty options based on your prompt.
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                    <div class="homepage-info-steps">
+                        <i class="fas fa-utensils" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                        <h2>Pick one, start cooking</h2><br>
+                        Each customised recipe comes with ingredients and step-by-step instructions.
+                    </div>
+                </div>
+
+                <h1 style="margin-top: 80px;">Basic vs Advanced Search</h1>
+                <p>We have several tools you can use to specify your search.</p>
+                <div id="homepage-tools-container">
+                    <div class="homepage-info-steps">
+                        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                        <h2>Basic Search</h2><br>
+                        Simply type in any open-ended prompt and we will generate recipes based on your input.
+                    </div>
+                    <div class="homepage-info-steps">
+                        <i class="fas fa-search-plus" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                        <h2>Advanced Search</h2><br>
+                        The same deal as Basic Search, but you can specify a list of main ingredients to use.
+                    </div>
+                    <div class="homepage-info-steps">
+                        <i class="fas fa-globe-americas" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                        <h2>Try different cuisines</h2><br>
+                        You have the option to generate your recipes with a creative spin using cuisines from all around the world!
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="homepage-end">
+            <div id="homepage-end-container">
+                <img src="images/ltbb_logo_white.png" alt="logo" oncontextmenu="return false;">
+                <p>
+                    Let There Be Bite helps you discover creative, easy-to-follow recipes based on whatever you're craving or have in your kitchen.
+                    Just type a prompt, and get a variety of fresh meal ideas, from comfort food to bold new flavours.
+                    It's a fun, simple way to break out of your cooking routine and try something new anytime.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading-overlay" style="display: none;">
+        <div class="loader"></div>
+        <p>Loading your recipe...</p>
+    </div>
+
+</body>
