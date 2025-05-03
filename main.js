@@ -94,6 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(spinningFavicon);
         if (originalFavicon) originalFavicon.remove();
     
+        const backendURL = "https://lettherebebite.onrender.com";
+
         try {
             localStorage.setItem("dishName", dishName);
 
@@ -102,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let apiUses = 0;
 
             do {
-                response = await fetch("http://localhost:3000/api/recipe", {
+                response = await fetch(`${backendURL}/api/recipe`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ dishName, dishIngredients, searchType })

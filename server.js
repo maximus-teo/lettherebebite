@@ -162,33 +162,4 @@ app.post("/api/recipe", async (req, res) => {
     }
 });
 
-/* API CALL FOR PEXELS IMAGES
-const pexelsApiKey = process.env.PEXELS_API_KEY;
-
-if (!pexelsApiKey) {
-    console.error("PEXELS_API_KEY is missing! Check your .env file.");
-    process.exit(1);
-}
-
-app.post("/get-image", async (req, res) => {
-    const { query } = req.body;
-
-    try {
-        const response = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1`, {
-            headers: {
-                Authorization: pexelsApiKey
-            }
-        });
-
-        const data = await response.json();
-        const imageUrl = data.photos[0]?.src.large || null;
-
-        res.json({ imageUrl });
-    } catch (error) {
-        console.error("Error fetching image:", error);
-        res.status(500).json({ error: "Failed to fetch image." });
-    }
-});
-*/
-
 app.listen(3000, () => console.log("Server running on http://localhost:3000"));
