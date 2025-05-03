@@ -19,7 +19,16 @@ To test out LTBB, visit https://maximus-teo.github.io/lettherebebite
 
 
 ## Usage
-1. Instructions
+1. Enter a dish name or ingredient (e.g. "chicken curry")
+2. Groq generates a complete recipe with ingredients and instructions.
+3. Results are compiled in an orderly manner for the user to easily browse through.
+4. Results are cached for efficiency.
+
+## Future Improvements
++ User accounts + save recipe features
++ Nutrition calculator
++ Voice input integration
++ Image matching with keyword embedding
 
 ## 📌 How to Run Locally
 Here are the steps to run this program on your machine, with your own API key.
