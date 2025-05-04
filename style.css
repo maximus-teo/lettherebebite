@@ -215,13 +215,54 @@ select {
     font-family: 'Inter', sans-serif;
     padding: 10px 25px;
     font-size: 1.4rem;
+    border: none;
+    border-radius: 30px;
+    width: 530px;
+    position: relative;
+    margin-top: 30px;
+    background-color: white;
+}
+
+#search-bar {
+    display: flex;
+    width: 600px;
+    gap: 0px;
+}
+
+#search-bar input {
+    flex: 1;
+    font-family: 'Inter', sans-serif;
+    padding: 10px 25px;
+    font-size: 1.4rem;
     border-radius: 30px 0 0 30px;
     border: none;
     width: 530px;
-    position: relative;
-    margin-top: 20px;
     background-color: white;
-    margin-left: -70px;
+}
+
+#search-bar button {
+    background-color: black;
+    color: white;
+    border: none;
+    width: 80px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: 0.2s ease-in-out;
+    border-radius: 0 30px 30px 0;
+    margin-top: 30px;
+    margin-left: -30px;
+    z-index: 1;
+}
+
+#search-bar button:hover {
+    background-color: #3d3428;
+    transition: 0.2s ease-in-out;
+}
+
+#search-bar button:active {
+    background-color: black;
+    transition: 0.2s ease-in-out;
 }
 
 #search-frontpage-options {
@@ -441,31 +482,6 @@ nav {
     display:flex;
     flex-direction:row;
     gap:30px;
-}
-
-#search-button {
-    position: absolute;
-    left: 88%;
-    top: 67%;
-    background-color: black;
-    color: white;
-    border: none;
-    width: 80px;
-    height: 50px;
-    border-radius: 0px 30px 30px 0px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    transition: 0.2s ease-in-out;
-}
-
-#search-button:hover {
-    background-color: #3d3428;
-    transition: 0.2s ease-in-out;
-}
-
-#search-button:active {
-    background-color: black;
-    transition: 0.2s ease-in-out;
 }
 
 #homepage-info {
