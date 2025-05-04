@@ -33,9 +33,9 @@ app.post("/api/recipe", async (req, res) => {
     const basicPrompt = `
         Generate 4–5 recipe variants for "${dishName}".
 
-        Output only a **raw JSON array** of objects, no markdown, no code blocks, no explanations. Make sure syntax is perfect.
+        Output only a **raw JSON array** of objects, no markdown, no code blocks, no explanations. Make sure JSON syntax is perfect.
         
-        Each object must include **all of the following keys**:
+        Each JSON object must include **all of the following keys**:
 
         {
         "title": "Dish name mentioning distinct ingredients",
@@ -49,6 +49,7 @@ app.post("/api/recipe", async (req, res) => {
 
         Requirements:
         - The first object is the classic version of the dish, others are variants in random order.
+        - "description" is a short explanation of the dish's uniqueness or twist
         - "ingredients" must include portion sizes.
         - "instructions" should be comprehensive.
     `;
@@ -74,6 +75,7 @@ app.post("/api/recipe", async (req, res) => {
 
         Requirements:
         - The first object is the classic version of the dish, others are variants in random order.
+        - "description" is a short explanation of the dish's uniqueness or twist
         - "ingredients" must include portion sizes.
         - "instructions" should be comprehensive.
     `;
@@ -98,6 +100,7 @@ app.post("/api/recipe", async (req, res) => {
 
         Requirements:
         - The first object is the classic version of the dish, others are variants in random order.
+        - "description" is a short explanation of the dish's uniqueness or twist
         - "ingredients" must include portion sizes.
         - "ingredients" must mainly come from "${dishIngredients}".
         - "instructions" should be comprehensive.
@@ -124,6 +127,7 @@ app.post("/api/recipe", async (req, res) => {
 
         Requirements:
         - The first object is the classic version of the dish, others are variants in random order.
+        - "description" is a short explanation of the dish's uniqueness or twist
         - "ingredients" must include portion sizes.
         - "ingredients" must mainly come from "${dishIngredients}".
         - "instructions" should be comprehensive.
@@ -148,10 +152,11 @@ app.post("/api/recipe", async (req, res) => {
             },
             body: JSON.stringify({
                 model: "llama3-70b-8192",
+                response_format: {"type": "json_object"},
                 messages: [
                     {
                         role: "system",
-                        content: "You are a strict data generator. Only output raw structured arrays. Never include commentary, filler, or any extra text."
+                        content: "You are a strict data generator. Only output raw structured arrays of JSON objects. Never include commentary, filler, or any extra text."
                     },
                     {
                         role: "user",
