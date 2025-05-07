@@ -214,13 +214,17 @@ select {
 #search-frontpage input[type="text"] {
     font-family: 'Inter', sans-serif;
     padding: 10px 25px;
+    width: 530px;
+    height: 30px;
     font-size: 1.4rem;
     border: none;
+    background-color: white;
+}
+
+#advanced-input {
     border-radius: 30px;
-    width: 530px;
     position: relative;
     margin-top: 30px;
-    background-color: white;
 }
 
 #search-bar {
@@ -231,13 +235,8 @@ select {
 
 #search-bar input {
     flex: 1;
-    font-family: 'Inter', sans-serif;
-    padding: 10px 25px;
-    font-size: 1.4rem;
     border-radius: 30px 0 0 30px;
-    border: none;
-    width: 530px;
-    background-color: white;
+    margin-top: 20px;
 }
 
 #search-bar button {
@@ -250,8 +249,8 @@ select {
     font-size: 1.5rem;
     transition: 0.2s ease-in-out;
     border-radius: 0 30px 30px 0;
-    margin-top: 30px;
-    margin-left: -30px;
+    margin-top: 20px;
+    margin-left: 0px;
     z-index: 1;
 }
 
@@ -288,6 +287,7 @@ select {
     display: block;
     object-fit: cover;
     z-index: 0;
+    position: relative;
 }
 
 .navbar {
@@ -633,31 +633,29 @@ nav {
     }
 
     .page-container {
-        width: 100%;
-        min-width: 100%;
-        flex-direction: column;
-        flex-basis: auto;
+        position: unset;
     }
-
+    
     /* HOME PAGE */
 
     .img-coverpage {
         margin-left: -400px;
         width: 250%;
-        aspect-ratio: initial;
-        display: block;
-        object-fit: fill;
-        z-index: 0;
     }
 
     #frontpage-tagline {
         font-size: 1.5rem;
     }
+
+    #search-frontpage {
+        top: 0%;
+        left: 8%;
+    }
     
     #search-frontpage img {
-        height: 110px;
-        margin-top: 30px;
-        margin-left: -170px;
+        height: 130px;
+        margin-top: 100px;
+        margin-left: -140px;
     }
 
     #search-frontpage-a {
@@ -672,15 +670,39 @@ nav {
         margin-top: 50px;
         margin-left: 0px;
     }
-    
+
     #search-frontpage input[type="text"] {
         font-size: 1.2rem;
-        width: 230px;
-        margin-left: -60px;
+        height: 30px;
+        width: 300px;
+    }
+
+    #search-bar {
+        width: 210px;
+        margin-left: -175px;
+    }
+
+    #search-bar input {
+
+    }
+
+    #search-bar button {
+        position: absolute;
+        font-size: 1.2rem;
+        left: 305px;
+        top: 320px;
+        width: 65px;
+        height: 50px;
     }
 
     #prompt-container {
         align-items: center;
+    }
+
+    #advanced-input {
+        margin-top: 20px;
+        font-size: 1.1rem;
+        width: 70vw;
     }
 
     #search-frontpage-options {
@@ -702,15 +724,6 @@ nav {
 
     #search-frontpage-options .custom-checkbox .checkmark {
         width: 35px;
-    }
-
-    #search-button {
-        position: absolute;
-        font-size: 1.2rem;
-        left: 81%;
-        top: 56%;
-        width: 45px;
-        height: 45px;
     }
 
     #homepage-info {
