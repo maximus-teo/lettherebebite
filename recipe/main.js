@@ -70,6 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(spinningFavicon);
         if (originalFavicon) originalFavicon.remove();
     
-        window.location.href = "../../recipe-details";
+        window.location.href = "../recipe-details";
     });
 });

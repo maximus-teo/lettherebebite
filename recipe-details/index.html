@@ -44,19 +44,19 @@
                 <i style="margin-left: 10px;" class="fas fa-share"></i>
                 <span style="margin: 10px;">Share</span>
             </button>
-            <button id="download-button" class="custom-button">
+            <button id="download-button" class="custom-button" onclick="savePDF()">
                 <i style="margin-left: 10px;" class="fas fa-download"></i>
                 <span style="margin: 10px;">Download</span>
             </button>
         </div>
     </div>
 
-    <div id="blur-overlay"></div>
+    <div id="blur-overlay" onclick="toggleSharePopup()"></div>
 
     <div id="share-popup" style="display:none;">
         <div id="popup-content">
-            <div style="display:flex; flex-direction: row; gap: 650px; align-self: center;">
-                <h2 style="margin-bottom: 20px;">Share this page!</h2>
+            <div style="display:flex; flex-direction: row; gap: 600px; align-self: center;">
+                <h2 style="margin-bottom: 20px;">Share this website!</h2>
                 <i class="fas fa-close" style="font-size: 2rem;" onclick="toggleSharePopup()"></i>
             </div>
             <textarea id="share-message" placeholder="Enter your message here..."></textarea>

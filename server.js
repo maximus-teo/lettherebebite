@@ -40,7 +40,6 @@ app.post("/api/recipe", async (req, res) => {
         {
         "title": "Dish name mentioning distinct ingredients",
         "description": "Short, vivid description using varied language",
-        "url_name": "slug-format-name",
         "difficulty": 1–5,
         "prep_time": "45 minutes",
         "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika"],
@@ -65,7 +64,6 @@ app.post("/api/recipe", async (req, res) => {
         {
         "title": "Dish name mentioning distinct ingredients",
         "description": "Short, vivid description using varied language",
-        "url_name": "slug-format-name",
         "cuisine": "Cuisine type",
         "difficulty": 1–5,
         "prep_time": "45 minutes",
@@ -91,7 +89,6 @@ app.post("/api/recipe", async (req, res) => {
         {
         "title": "Dish name mentioning distinct ingredients",
         "description": "Short, vivid description using varied language",
-        "url_name": "slug-format-name",
         "difficulty": 1–5,
         "prep_time": "45 minutes",
         "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika"],
@@ -117,7 +114,6 @@ app.post("/api/recipe", async (req, res) => {
         {
         "title": "Dish name mentioning distinct ingredients",
         "description": "Short, vivid description using varied language",
-        "url_name": "slug-format-name",
         "cuisine": "Cuisine type",
         "difficulty": 1–5,
         "prep_time": "45 minutes",
