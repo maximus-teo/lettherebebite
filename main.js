@@ -173,5 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
     shuffledPrompts = shuffle(prompts);
     rotatePrompt(); 
     setInterval(rotatePrompt, 5000); // 5 seconds
+
+    label.addEventListener('click', () => {
+        searchInput.value = label.innerText;
+    });
 });
 

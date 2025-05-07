@@ -8,6 +8,10 @@
     <meta name="keywords" content="food, recipe, ai, generator, ltbb, online">
     <meta name="author" content="Maximus Teo">
 
+    <meta property="og:title" content="Let There Be Bite - Your Personalised Recipe Generator" />
+    <meta property="og:description" content="Check out this recipe website if you wanna find something easy, tasty, and quick to make!" />
+    <meta property="og:url" content="https://maximus-teo.github.io/lettherebebite/recipe-details" />
+
     <link rel="stylesheet" type="text/css" href="../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,12 +19,12 @@
 
     <script src="https://kit.fontawesome.com/0c648b67fc.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="main.js"></script>
- 
+
 </head>
 </html>
 
 <body style="background-color: #fcf6e3">
-  
+
     <div id="navbar" class="navbar">
         <a href="../"><img src="../images/ltbb_navlogo.png"></a>
         <nav> 
@@ -31,19 +35,38 @@
 
     <div class="page-container" style="display: flex; flex-direction: row; gap: 0px;">
         <p id="recipe-text">Recipe details</p>
-        <div class="side-buttons" style="display: flex; flex-direction: row; gap: 20px; margin-left: 150px; margin-right: 150px; margin-top: 120px;">
-            <button id="copy-button" class="custom-button" style="width: fit-content; height: fit-content; text-align: left; padding: 10px;">
+        <div class="side-buttons">
+            <button id="copy-button" class="custom-button" onclick="copyRecipe()">
                 <i style="margin-left: 10px;" class="fa-regular fa-copy"></i>
                 <span style="margin: 10px;">Copy</span>
             </button>
-            <button id="share-button" class="custom-button" style="width: fit-content; height: fit-content; text-align: left; padding: 10px;">
+            <button id="share-button" class="custom-button" onclick="toggleSharePopup()">
                 <i style="margin-left: 10px;" class="fas fa-share"></i>
                 <span style="margin: 10px;">Share</span>
             </button>
-            <button id="download-button" class="custom-button" style="width: fit-content; height: fit-content; text-align: left; padding: 10px;">
+            <button id="download-button" class="custom-button">
                 <i style="margin-left: 10px;" class="fas fa-download"></i>
                 <span style="margin: 10px;">Download</span>
             </button>
+        </div>
+    </div>
+
+    <div id="blur-overlay"></div>
+
+    <div id="share-popup" style="display:none;">
+        <div id="popup-content">
+            <div style="display:flex; flex-direction: row; gap: 650px; align-self: center;">
+                <h2 style="margin-bottom: 20px;">Share this page!</h2>
+                <i class="fas fa-close" style="font-size: 2rem;" onclick="toggleSharePopup()"></i>
+            </div>
+            <textarea id="share-message" placeholder="Enter your message here..."></textarea>
+            <div id="popup-buttons">
+                <img src="https://cdn.simpleicons.org/facebook/000000" alt="Facebook" width="64" height="64" onclick="shareTo('facebook')">
+                <img src="https://cdn.simpleicons.org/x/000000" alt="X (Twitter)" width="64" height="64" onclick="shareTo('twitter')">
+                <img src="https://cdn.simpleicons.org/whatsapp/000000" alt="WhatsApp" width="64" height="64" onclick="shareTo('whatsapp')">
+                <img src="https://cdn.simpleicons.org/instagram/000000" alt="Instagram" width="64" height="64" onclick="shareTo('instagram')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Font_Awesome_5_brands_linkedin.svg" alt="LinkedIn" width="68" height="68" onclick="shareTo('linkedin')">
+            </div>
         </div>
     </div>
 
