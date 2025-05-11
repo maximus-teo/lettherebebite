@@ -9,16 +9,25 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-/*
-// allow requests from gitHub pages
-app.use(cors({
-    origin: 'https://maximus-teo.github.io',
-    methods: ['GET', 'POST'],
-    credentials: true
-}));
-app.options('*', cors()); // enable pre-flight
-*/
-app.use(cors());
+const allowedOrigins = ['https://maximus-teo.github.io'];
+
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+
+    next();
+});
+
 app.use(express.json());
 
 const groqApiKey = process.env.GROQ_API_KEY;
