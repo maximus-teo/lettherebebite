@@ -177,7 +177,7 @@ if (!spoonacularApiKey) {
 }
 
 app.post('/api/nutrition', async (req, res) => {
-    const { ingredients, title } = req.body;
+    const { title, ingredients } = req.body;
 
     if (!title || !Array.isArray(ingredients)) {
         return res.status(400).json({ error: 'Missing title or ingredients list' });
