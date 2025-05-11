@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     copyButton = document.getElementById("copy-button");
     msg = document.getElementById("share-message");
     
-    if (window.innerWidth <= 768) {
+    if (window.outerWidth <= 768) {
         let prevScrollpos = window.pageYOffset;
         window.onscroll = function() {
             var currentScrollPos = window.pageYOffset;
@@ -72,10 +72,40 @@ document.addEventListener('DOMContentLoaded', () => {
         </ol>
         <hr>\
     `;
-
-    //localStorage.setItem(selectedRecipe.url_name, recipeText.innerHTML)
-
+    fetchNutrition();
 });
+
+const backendURL = "https://lettherebebite.onrender.com";
+
+async function fetchNutrition() {
+    try {
+        alert(selectedRecipe.title + " and " + selectedRecipe.ingredients);
+        const response = await fetch(`${backendURL}/api/nutrition`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title: selectedRecipe.title, ingredients: selectedRecipe.ingredients })
+        });
+
+        if (!response.ok) throw new Error("Network error");
+
+        const data = await response.json();
+
+        const output = document.getElementById("nutrition-text");
+        output.innerHTML = "";
+
+        if (data.nutrients) {
+            data.nutrients.forEach(n => {
+                const li = document.createElement("li");
+                li.textContent = `${n.name}: ${n.amount} ${n.unit}`;
+                output.appendChild(li);
+            });
+        } else {
+            output.innerHTML = "<li>Error: No nutrition data returned.</li>";
+        }
+    } catch (err) {
+        alert("Error: " + err.message);
+    }
+}
 
 function copyRecipe() {
     navigator.clipboard.writeText(recipeText.innerText).then(() => {

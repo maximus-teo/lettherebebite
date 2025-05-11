@@ -7,6 +7,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors');
 const app = express();
+const PORT = 3000;
 
 // allow requests from gitHub pages
 app.use(cors({
@@ -169,4 +170,36 @@ app.post("/api/recipe", async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+const spoonacularApiKey = process.env.SPOONACULAR_API_KEY;
+if (!spoonacularApiKey) {
+    console.error("SPOONACULAR_API_KEY is missing! Check your .env file.");
+    process.exit(1);
+}
+
+app.post('/api/nutrition', async (req, res) => {
+    const { ingredients, title } = req.body;
+
+    if (!title || !Array.isArray(ingredients)) {
+        return res.status(400).json({ error: 'Missing title or ingredients list' });
+    }
+
+    try {
+        const response = await fetch(`https://api.spoonacular.com/recipes/analyze?apiKey=${spoonacularApiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, ingredients })
+        });
+
+        if (!response.ok) throw new Error('Spoonacular API failed');
+
+        const data = await response.json();
+        res.json(data);
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});

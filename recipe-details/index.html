@@ -33,8 +33,11 @@
         </nav>
     </div>
 
-    <div class="page-container" style="display: flex; flex-direction: row; gap: 0px;">
-        <p id="recipe-text">Recipe details</p>
+    <div style="display:flex; flex-direction:row; gap: 1000px; margin-top: 100px; margin-left: 80px; align-content: center;">
+        <button style="width: 200px; height: 50px; line-height: 1; padding: 0px;" class="custom-button">
+            <i style="margin-right: 10px;" class="fas fa-arrow-left"></i>
+            <span>Back to list</span>
+        </button>
         <div class="side-buttons">
             <button id="copy-button" class="custom-button" onclick="copyRecipe()">
                 <i style="margin-left: 10px;" class="fa-regular fa-copy"></i>
@@ -49,6 +52,10 @@
                 <span style="margin: 10px;">Download</span>
             </button>
         </div>
+    </div>
+    <div class="page-container" style="display: flex; flex-direction: row; gap: 0px;">
+        <p id="recipe-text">Recipe details</p>
+        <p id="nutrition-text">Nutrition details</p>
     </div>
 
     <div id="blur-overlay" onclick="toggleSharePopup()"></div>
