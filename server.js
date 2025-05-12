@@ -9,7 +9,11 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-const allowedOrigins = ['https://maximus-teo.github.io'];
+const allowedOrigins = [
+  'https://maximus-teo.github.io',
+  'http://127.0.0.1:8080',
+  'http://localhost:8080'
+];
 
 app.use((req, res, next) => {
     const origin = req.headers.origin;
