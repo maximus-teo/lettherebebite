@@ -114,6 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
                 if (!response.ok) throw new Error("Failed to load recipe");
             
+                console.log("Full API response:", response);
+
                 res = await response.json();
                 recipeData = res.choices[0].message?.content;
             
