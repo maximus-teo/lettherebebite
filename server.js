@@ -50,11 +50,10 @@ app.post("/api/recipe", async (req, res) => {
     const basicPrompt = `
         Generate 4–5 recipe variants for "${dishName}".
 
-        Output only a **raw JSON array** of objects, no markdown, no code blocks, no explanations. Make sure JSON syntax is perfect.
+        Output only a **raw JSON array** of objects, no markdown, no code blocks, no explanations. Make sure you follow the JSON array format: [{...}, {...}, {...}]
         
         Each JSON object must follow this exact format **including all keys**:
 
-        [
         {
         "title": "Dish name mentioning distinct ingredients",
         "description": "Short, vivid description using varied language",
@@ -62,8 +61,7 @@ app.post("/api/recipe", async (req, res) => {
         "prep_time": "45 minutes",
         "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika"],
         "instructions": ["Marinate the chicken in paprika and oil for 15 mins.", "Grill over high heat until fully cooked."]
-        }, {...}, {...}
-        ]
+        }
 
         Requirements:
         - The first object is the classic version of the dish, others are variants in random order.
@@ -76,11 +74,10 @@ app.post("/api/recipe", async (req, res) => {
     const basicPlusPrompt = `
         Generate ${x} recipe variants for "${dishName}" with different cuisines.
 
-        Output only a **raw JSON array** of objects, no markdown, no code blocks, no explanations. Make sure syntax is perfect.
-        
+        Output only a **raw JSON array** of objects, no markdown, no code blocks, no explanations. Make sure you follow the JSON array format: [{...}, {...}, {...}]
+
         Each JSON object must follow this exact format **including all keys**:
 
-        [
         {
         "title": "Dish name mentioning distinct ingredients",
         "description": "Short, vivid description using varied language",
@@ -89,8 +86,7 @@ app.post("/api/recipe", async (req, res) => {
         "prep_time": "45 minutes",
         "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika"],
         "instructions": ["Marinate the chicken in paprika and oil for 15 mins.", "Grill over high heat until fully cooked."]
-        }, {...}, {...}
-        ]
+        }
 
         Requirements:
         - The first object is the classic version of the dish, others are variants in random order.
@@ -103,11 +99,10 @@ app.post("/api/recipe", async (req, res) => {
     const advancedPrompt = `
         Generate 4–5 recipe variants for "${dishName}" using only the ingredients: "${dishIngredients}". You may add up to 2 extra ingredients if necessary.
 
-        Output only a **raw JSON array** of objects, no markdown, no code blocks, no explanations. Make sure syntax is perfect.
+        Output only a **raw JSON array** of objects, no markdown, no code blocks, no explanations. Make sure you follow the JSON array format: [{...}, {...}, {...}]
         
         Each JSON object must follow this exact format **including all keys**:
 
-        [
         {
         "title": "Dish name mentioning distinct ingredients",
         "description": "Short, vivid description using varied language",
@@ -115,8 +110,7 @@ app.post("/api/recipe", async (req, res) => {
         "prep_time": "45 minutes",
         "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika"],
         "instructions": ["Marinate the chicken in paprika and oil for 15 mins.", "Grill over high heat until fully cooked."]
-        }, {...}, {...}
-        ]
+        }
 
         Requirements:
         - The first object is the classic version of the dish, others are variants in random order.
@@ -130,11 +124,10 @@ app.post("/api/recipe", async (req, res) => {
     const advancedPlusPrompt = `
         Generate 4–5 recipe variants for "${dishName}" with different cuisines AND using only the ingredients: "${dishIngredients}". You may add up to 2 extra ingredients if necessary.
 
-        Output only a **raw JSON array** of objects, no markdown, no code blocks, no explanations. Make sure syntax is perfect.
+        Output only a **raw JSON array** of objects, no markdown, no code blocks, no explanations. Make sure you follow the JSON array format: [{...}, {...}, {...}]
         
         Each JSON object must follow this exact format **including all keys**:
 
-        [
         {
         "title": "Dish name mentioning distinct ingredients",
         "description": "Short, vivid description using varied language",
@@ -143,8 +136,7 @@ app.post("/api/recipe", async (req, res) => {
         "prep_time": "45 minutes",
         "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika"],
         "instructions": ["Marinate the chicken in paprika and oil for 15 mins.", "Grill over high heat until fully cooked."]
-        }, {...}, {...}
-        ]
+        }
 
         Requirements:
         - The first object is the classic version of the dish, others are variants in random order.
