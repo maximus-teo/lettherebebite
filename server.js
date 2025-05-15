@@ -165,7 +165,6 @@ app.post("/api/recipe", async (req, res) => {
             },
             body: JSON.stringify({
                 model: "llama3-70b-8192",
-                response_format: {"type": "json_object"},
                 messages: [
                     {
                         role: "system",

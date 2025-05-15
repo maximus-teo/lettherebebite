@@ -117,6 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("Full API response:", response);
 
                 res = await response.json();
+                console.log("Response in JSON: ", res);
+                
                 recipeData = res.choices[0].message?.content;
             
                 try {
