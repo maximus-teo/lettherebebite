@@ -9,14 +9,14 @@ To test out LTBB, visit https://maximus-teo.github.io/lettherebebite
 ## Features
 + AI-generated recipes using natural language input
 + Recipes are generated with variety in ingredients and cuisines
++ Recipes are integrated with a comprehensive list of nutritional values
 + Desktop and mobile-responsive layouts
 + Local caching of search results
 
 ## Tech Stack
 + **Frontend**: Built with HTML, CSS, and JavaScript
 + **Backend**: Node.js, Express
-+ **API used**: Groq AI for recipe generation
-
++ **APIs used**: Groq AI for recipe generation, Spoonacular for nutritional information
 
 ## Usage
 1. Enter a dish name or ingredient (e.g. "chicken curry")
@@ -26,12 +26,12 @@ To test out LTBB, visit https://maximus-teo.github.io/lettherebebite
 
 ## Future Improvements
 + User accounts + save recipe features
-+ Nutrition calculator
 + Voice input integration
 + Image matching with keyword embedding
++ More customisation on nutritional values
 
 ## 📌 How to Run Locally
-Here are the steps to run this program on your machine, with your own API key.
+Here are the steps to run this program on your machine, with your own API keys.
 
 1. **Clone this repository**:
    ```
@@ -42,20 +42,22 @@ Here are the steps to run this program on your machine, with your own API key.
 2. **Create a `.env` file** in the root of your project.
 
 3. **Add your API key to the `.env` file**: <br />
-    You will need a working API key to run this editor. To get your API key, visit Groq and receive your own API key:
-    https://console.groq.com/home
+    You will need API keys to run this website. To get your API keys, visit the links below:
+    **Groq**: https://console.groq.com/home
+    **Spoonacular**: https://spoonacular.com/food-api/console
 
-    Go to your `.env` file and add your API key as shown.
+    Go to your `.env` file and add your API keys as shown.
     ```
     GROQ_API_KEY=your-api-key-here
+    SPOONACULAR_API_KEY=your-api-key-here
     ```
 
 4. **Run the project in terminal**:
     Make sure the directory is set to the `ltbb` folder, then run `npm start`.
-    The execution instructions are preset in `package-lock.json` so that it runs `node.js` and `live-server` using `concurrently`.
+    The execution instructions are already preset in `package-lock.json` so that it runs `node server.js` and `live-server` using `concurrently`.
     ```
     cd ltbb
     npm start
     ```
 
-~ Designed and developed by Maximus Teo
+~ Designed and developed by **Maximus Teo**
