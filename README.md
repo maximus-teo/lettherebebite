@@ -42,9 +42,9 @@ Here are the steps to run this program on your machine, with your own API keys.
 2. **Create a `.env` file** in the root of your project.
 
 3. **Add your API key to the `.env` file**: <br />
-    You will need API keys to run this website. To get your API keys, visit the links below:\\
-    **Groq**: https://console.groq.com/home\\
-    **Spoonacular**: https://spoonacular.com/food-api/console\\
+    You will need API keys to run this website. To get your API keys, visit the links below: <br />
+    **Groq**: https://console.groq.com/home <br />
+    **Spoonacular**: https://spoonacular.com/food-api/console <br />
 
     Go to your `.env` file and add your API keys as shown.
     ```
