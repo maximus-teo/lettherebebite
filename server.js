@@ -6,6 +6,8 @@ require('dotenv').config({ path: './.env' });
 const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors');
+const qs = require('querystring');
+
 const app = express();
 const PORT = 3000;
 
@@ -59,8 +61,8 @@ app.post("/api/recipe", async (req, res) => {
         "description": "Short, vivid description using varied language",
         "difficulty": 1–5,
         "prep_time": "45 minutes",
-        "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika"],
-        "instructions": ["Marinate the chicken in paprika and oil for 15 mins.", "Grill over high heat until fully cooked."]
+        "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika", ...],
+        "instructions": ["Step 1", "Step 2", "Step 3", ...]
         }
 
         Requirements:
@@ -84,8 +86,8 @@ app.post("/api/recipe", async (req, res) => {
         "cuisine": "Cuisine type",
         "difficulty": 1–5,
         "prep_time": "45 minutes",
-        "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika"],
-        "instructions": ["Marinate the chicken in paprika and oil for 15 mins.", "Grill over high heat until fully cooked."]
+        "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika", ...],
+        "instructions": ["Step 1", "Step 2", "Step 3", ...]
         }
 
         Requirements:
@@ -108,8 +110,8 @@ app.post("/api/recipe", async (req, res) => {
         "description": "Short, vivid description using varied language",
         "difficulty": 1–5,
         "prep_time": "45 minutes",
-        "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika"],
-        "instructions": ["Marinate the chicken in paprika and oil for 15 mins.", "Grill over high heat until fully cooked."]
+        "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika", ...],
+        "instructions": ["Step 1", "Step 2", "Step 3", ...]
         }
 
         Requirements:
@@ -134,8 +136,8 @@ app.post("/api/recipe", async (req, res) => {
         "cuisine": "Cuisine type",
         "difficulty": 1–5,
         "prep_time": "45 minutes",
-        "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika"],
-        "instructions": ["Marinate the chicken in paprika and oil for 15 mins.", "Grill over high heat until fully cooked."]
+        "ingredients": ["200g chicken thighs", "1 tbsp olive oil", "1 tsp paprika", ...],
+        "instructions": ["Step 1", "Step 2", "Step 3", ...]
         }
 
         Requirements:
@@ -192,26 +194,41 @@ if (!spoonacularApiKey) {
 }
 
 app.post('/api/nutrition', async (req, res) => {
-    const { title, ingredients } = req.body;
+    const { title, servings, ingredients, instructions } = req.body;
 
-    if (!title || !Array.isArray(ingredients)) {
-        return res.status(400).json({ error: 'Missing title or ingredients list' });
-    }
+    const ingredientList = Array.isArray(ingredients)
+    ? ingredients.map(i => i.trim()).join('\n')
+    : ingredients;
+
+    const formBody = qs.stringify({
+        ingredientList,
+        servings: 1,
+        title: title || "Untitled Recipe",
+        defaultCss: true,
+        showOptionalNutrients: true,
+        showZeroValues: true
+    });
 
     try {
-        const response = await fetch(`https://api.spoonacular.com/recipes/analyze?apiKey=${spoonacularApiKey}`, {
+        const response = await fetch(`https://api.spoonacular.com/recipes/visualizeNutrition?ingredientList=${ingredients}&servings=${servings}`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title, ingredients })
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                "x-api-key": spoonacularApiKey
+            },
+            body: formBody
         });
 
-        if (!response.ok) throw new Error('Spoonacular API failed');
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Spoonacular API failed: ${errorText}`);
+        }
 
-        const data = await response.json();
-        res.json(data);
+        const html = await response.text();
+        res.send(html);
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).send(`<p>Error: ${err.message}</p>`);
     }
 });
 

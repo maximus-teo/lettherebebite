@@ -72,36 +72,35 @@ document.addEventListener('DOMContentLoaded', () => {
         </ol>
         <hr>\
     `;
-    fetchNutrition();
+
+    localStorage.removeItem("dishNutrition");
+    if (!localStorage.getItem("dishNutrition")) {
+        fetchNutrition();
+    }
+
 });
 
 const backendURL = "https://lettherebebite.onrender.com";
 
 async function fetchNutrition() {
     try {
-        alert(selectedRecipe.title + " and " + selectedRecipe.ingredients);
         const response = await fetch(`${backendURL}/api/nutrition`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title: selectedRecipe.title, ingredients: selectedRecipe.ingredients })
+            body: JSON.stringify({
+                title: selectedRecipe.title,
+                servings: 1,
+                ingredients: selectedRecipe.ingredients,
+            })
         });
 
-        if (!response.ok) throw new Error("Network error");
-
-        const data = await response.json();
-
-        const output = document.getElementById("nutrition-text");
-        output.innerHTML = "";
-
-        if (data.nutrients) {
-            data.nutrients.forEach(n => {
-                const li = document.createElement("li");
-                li.textContent = `${n.name}: ${n.amount} ${n.unit}`;
-                output.appendChild(li);
-            });
-        } else {
-            output.innerHTML = "<li>Error: No nutrition data returned.</li>";
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Spoonacular API failed: ${errorText}`);
         }
+        
+        const html = await response.text();
+        document.getElementById("nutrition-text").innerHTML = html;
     } catch (err) {
         alert("Error: " + err.message);
     }
