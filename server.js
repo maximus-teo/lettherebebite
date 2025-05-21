@@ -43,7 +43,7 @@ if (!groqApiKey) {
     process.exit(1);
 }
 
-app.post("/api/recipe", async (req, res) => {
+app.post("/api/groq-recipe", async (req, res) => {
     const { dishName, dishIngredients, searchType } = req.body;
 
     let x = Math.floor(Math.random() * 6) + 5;
@@ -193,7 +193,27 @@ if (!spoonacularApiKey) {
     process.exit(1);
 }
 
-app.post('/api/nutrition', async (req, res) => {
+app.post("/api/spoon-recipe", async (req, res) => {
+    const { query, cuisine, diet, intolerances, includeIngredients, number } = req.body;
+
+    try {
+        const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&cuisine=${cuisine}&diet=${diet}&intolerances=${intolerances}&includeIngredients=${includeIngredients}&instructionsRequired=true&number=${number}&addRecipeInformation=true`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "x-api-key": spoonacularApiKey
+            }
+        });
+
+        const data = await response.json();
+        res.json(data);
+    } catch (err) {
+        console.error("Error: ", err);
+        res.status(500).json({ error: "Spoonacular: failed to generate recipe." });
+    }
+});
+
+app.post('/api/spoon-nutrition', async (req, res) => {
     const { title, servings, ingredients, instructions } = req.body;
 
     const ingredientList = Array.isArray(ingredients)

@@ -1,7 +1,5 @@
 /* RECIPE DETAILS PAGE
-    Copy: copy recipe name to clipboard
-    Share: pre-made message - I got a personalised recipe for {title} from Let There Be Bite! {3 emojis} Check it out here: {link to main page}
-    Download: download the pdf of this screen
+
 */
 let selectedRecipe;
 let recipeText;
@@ -34,13 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    let blackStars = "";
-    let whiteStars = "";
-    for (let i = 0; i < selectedRecipe.difficulty; i++) blackStars += "★";
-    for (let i = 0; i < (5-selectedRecipe.difficulty); i++) whiteStars += "☆";
+    if (localStorage.getItem("apiMode") === "groq") {
+        let blackStars = "";
+        let whiteStars = "";
+        for (let i = 0; i < selectedRecipe.difficulty; i++) blackStars += "★";
+        for (let i = 0; i < (5-selectedRecipe.difficulty); i++) whiteStars += "☆";
 
-    recipeText.innerHTML =
-    `
+        recipeText.innerHTML =
+        `
         <h1>${selectedRecipe.title}</h1>
         <p><em>${selectedRecipe.description}</em></p>
         <div class="tag-container">
@@ -71,7 +70,45 @@ document.addEventListener('DOMContentLoaded', () => {
             ${selectedRecipe.instructions.map(s => `<li>${s}</li>`).join('')}
         </ol>
         <hr>\
-    `;
+        `;
+    } else if (localStorage.getItem("apiMode") === "spoonacular") {
+        recipeText.innerHTML =
+        `
+        <h1>${selectedRecipe.title}</h1>
+        <p><em>${selectedRecipe.summary.split('. ')[0]}.</em></p>
+        <div class="tag-container">
+            ${selectedRecipe.cuisines.length > 0 ? `
+            <div class="recipe-tags">
+                <p><strong>Cuisine: </strong>${selectedRecipe.cuisines}</p>
+            </div>` : ``}
+            ${selectedRecipe.readyInMinutes ? `
+            <div class="recipe-tags">
+                <p><strong>Prep Time: </strong>${selectedRecipe.readyInMinutes} minutes</p>
+            </div>` : ``}
+            ${selectedRecipe.servings ? `
+            <div class="recipe-tags">
+                <p><strong>Servings: </strong>${selectedRecipe.servings}</p>
+            </div>` : ``}
+        </div>
+        <h2>Ingredients</h2>
+        <ul>
+            ${selectedRecipe.analyzedInstructions[0].steps[0].ingredients.map(i => `
+                <li>
+                    <label class="custom-checkbox">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                        ${i.name}
+                    </label>
+                </li>
+                `).join('')}</ul>
+        <h2>Instructions</h2>
+        <ol>
+            ${selectedRecipe.analyzedInstructions[0].steps.map(s => `<li>${s.step}</li>`).join('')}
+        </ol>
+        ${selectedRecipe.sourceUrl ? `<em><p>Adapted from <a href=${selectedRecipe.sourceUrl}>${selectedRecipe.creditsText.split(' ')[0].toLowerCase()}</a></p></em>` : ``}
+        <hr>\
+        `;
+    }
 
     localStorage.removeItem("dishNutrition");
     if (!localStorage.getItem("dishNutrition")) {
@@ -80,11 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-const backendURL = "https://lettherebebite.onrender.com";
+const backendURL = "http://localhost:3000";//"https://lettherebebite.onrender.com";
 
 async function fetchNutrition() {
     try {
-        const response = await fetch(`${backendURL}/api/nutrition`, {
+        const response = await fetch(`${backendURL}/api/spoon-nutrition`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

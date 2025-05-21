@@ -279,7 +279,7 @@ select {
     transition: 0.2s ease-in-out;
 }
 
-#search-frontpage-options {
+.search-frontpage-options {
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -287,9 +287,12 @@ select {
     color: white;
     font-size: 1.3rem;
     font-weight: 400;
+    justify-content: center;
 }
 
-#search-frontpage-a {
+.search-frontpage-a {
+    min-width: 35vw;
+    min-height: 5vh;
     background-color: #493214;
     text-align: center;
     padding: 0px 15px 15px;
@@ -763,7 +766,7 @@ nav {
         margin-left: -140px;
     }
 
-    #search-frontpage-a {
+    .search-frontpage-a {
         padding: 0px 10px 10px;
         width: 85vw;
         margin-left: -10px;
@@ -806,7 +809,7 @@ nav {
         width: 70vw;
     }
 
-    #search-frontpage-options {
+    .search-frontpage-options {
         font-size: 0.9rem;
     }
 
@@ -823,7 +826,7 @@ nav {
         transform: translate(-50%, -50%);
     }
 
-    #search-frontpage-options .custom-checkbox .checkmark {
+    .search-frontpage-options .custom-checkbox .checkmark {
         width: 35px;
     }
 

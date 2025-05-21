@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     output = localStorage.getItem("recipeData");
     console.log("recipeData: ", output);
+    console.log("API mode: ", localStorage.getItem("apiMode"))
+    console.log("recipeData.length: ", output.length)
+
+    const recipeListContainer = document.getElementById("recipe-list");
+    const resultsText = document.getElementById("recipe-results");
 
     try {
         allRecipes = JSON.parse(output);
@@ -20,23 +25,32 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const recipeListContainer = document.getElementById("recipe-list");
-    const resultsText = document.getElementById("recipe-results");
     let count = 0;
-
+    
     allRecipes.forEach(recipe => {
         const newItem = document.createElement("button");
         newItem.className = "item";
-        let blackStars = "";
-        let whiteStars = "";
-        for (let i = 0; i < recipe.difficulty; i++) blackStars += "★";
-        for (let i = 0; i < (5-recipe.difficulty); i++) whiteStars += "☆";
-        newItem.innerHTML =
-        `
+
+        if (localStorage.getItem("apiMode") === "groq") {
+            let blackStars = "";
+            let whiteStars = "";
+            for (let i = 0; i < recipe.difficulty; i++) blackStars += "★";
+            for (let i = 0; i < (5-recipe.difficulty); i++) whiteStars += "☆";
+            newItem.innerHTML =
+            `
             <h3>${recipe.title}</h3>
             <p><em>${recipe.description}</em></p>
             <p>${recipe.cuisine ? `<strong>Cuisine: </strong>${recipe.cuisine} | ` : ``}<strong>Difficulty: </strong>${blackStars}${whiteStars} | <strong>Prep Time: </strong>${recipe.prep_time}</p>
-        `;
+            `;
+        } else if (localStorage.getItem("apiMode") === "spoonacular") {
+            newItem.innerHTML =
+            `
+            <h3>${recipe.title}</h3>
+            <p><em>${recipe.summary.split('. ')[0]}.</em></p>
+            <p>${recipe.cuisines.length > 0 ? `<strong>Cuisine: </strong>${recipe.cuisines} | ` : ``}<strong>Prep Time: </strong>${recipe.readyInMinutes} minutes | ${recipe.servings ? `<strong>Servings: </strong> ${recipe.servings}` : ``}</p>
+            `;
+        }
+
         newItem.addEventListener('click', () => {
             recipeListContainer.querySelectorAll(".item").forEach(item => {
                 item.style.border = "none";

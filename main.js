@@ -94,63 +94,100 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(spinningFavicon);
         if (originalFavicon) originalFavicon.remove();
     
-        const backendURL = "https://lettherebebite.onrender.com";
+        const backendURL = "http://localhost:3000";//"https://lettherebebite.onrender.com";
 
         try {
             localStorage.setItem("dishName", dishName);
+            let response, data, recipeData, test;
 
-            let passed = false;
-            let apiUses = 0;
-            let retryCount = 0;
-            const maxRetries = 5;
-            let response, res, recipeData, test;
-            
-            do {
-                response = await fetch(`${backendURL}/api/recipe`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ dishName, dishIngredients, searchType })
-                });
-            
-                if (!response.ok) throw new Error("Failed to load recipe");
-            
-                console.log("Full API response:", response);
+            // use spoonacular first
+            localStorage.setItem("apiMode", "spoonacular");
 
-                res = await response.json();
-                console.log("Response in JSON: ", res);
+            const veg = document.getElementById("special-veg");
+            const gluten = document.getElementById("special-gluten");
+            const keto = document.getElementById("special-keto");
+
+            let diets = [];
+            if (veg.checked) diets.push(veg.value);
+            if (gluten.checked) diets.push(gluten.value);
+            if (keto.checked) diets.push(keto.value);
+            const dietString = diets.join(",");
+
+            response = await fetch(`${backendURL}/api/spoon-recipe`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    query: dishName,
+                    cuisine: "",
+                    diet: dietString || "",
+                    intolerances: "",
+                    includeIngredients: dishIngredients || "",
+                    number: Math.floor(Math.random() * 6) + 5 // random 5-10
+                })
+            });
+
+            if (!response.ok) throw new Error("Failed to load recipe");
+            console.log("Spoonacular raw response: ", response);
+
+            data = await response.json();
+            recipeData = JSON.stringify(data.results);
+            console.log("Spoonacular JSON: ", recipeData);
+
+            // if spoonacular fails, use groq
+
+            if (recipeData.length === 2 || recipeData === null) {
+                localStorage.setItem("apiMode", "groq");
+
+                let passed = false;
+                let apiUses = 0;
+                let retryCount = 0;
+                const maxRetries = 5;
+
+                do {
+                    response = await fetch(`${backendURL}/api/groq-recipe`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ dishName, dishIngredients, searchType })
+                    });
                 
-                recipeData = res.choices[0].message?.content;
-            
-                try {
-                    test = JSON.parse(recipeData);
-                    passed = test.every(recipe =>
-                        recipe.title &&
-                        recipe.description &&
-                        recipe.difficulty &&
-                        recipe.prep_time &&
-                        recipe.ingredients &&
-                        recipe.instructions
-                    );
-                } catch (err) {
-                    console.error("Failed to parse JSON:", err);
-                    passed = false;
+                    if (!response.ok) throw new Error("Failed to load recipe");
+                    console.log("Groq raw response: ", response);
+
+                    data = await response.json();
+                    console.log("Groq JSON: ", data);
+                    
+                    recipeData = data.choices[0].message?.content;
+                
+                    try {
+                        test = JSON.parse(recipeData);
+                        passed = test.every(recipe =>
+                            recipe.title &&
+                            recipe.description &&
+                            recipe.difficulty &&
+                            recipe.prep_time &&
+                            recipe.ingredients &&
+                            recipe.instructions
+                        );
+                    } catch (err) {
+                        console.error("Failed to parse JSON:", err);
+                        passed = false;
+                    }
+                
+                    apiUses++;
+                    retryCount++;
+                    console.log(`API used (attempt ${retryCount})`);
+                
+                } while (!passed && retryCount < maxRetries);
+                
+                if (!passed) {
+                    console.error("Failed to get valid recipe after max retries.");
+                    throw new Error("Failed to get valid recipe after max retries.");
+                } else {
+                    console.log("Recipe passed validation.");
                 }
-            
-                apiUses++;
-                retryCount++;
-                console.log(`API used (attempt ${retryCount})`);
-            
-            } while (!passed && retryCount < maxRetries);
-            
-            if (!passed) {
-                console.error("Failed to get valid recipe after max retries.");
-                alert("Failed to get valid recipe after max retries.");
-            } else {
-                console.log("Recipe passed validation.");
             }
             
             localStorage.setItem("recipeData", recipeData);
-    
             window.location.href = "./recipe";
     
         } catch (err) {

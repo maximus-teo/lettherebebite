@@ -46,12 +46,34 @@
                     <i class="fas fa-search"></i>
                 </button>
             </div>
-            <div id="search-frontpage-a">
+            <div class="search-frontpage-a" style="padding: 20px 0px 0px 0px; background-color: #5c4d39;">
+                <div class="search-frontpage-options">
+                    <label class="custom-checkbox">
+                        <input id="special-veg" type="checkbox" value="vegan">
+                        <span class="checkmark"></span>
+                        <i class="fa-solid fa-leaf" style="margin-right: 10px; color: greenyellow"></i>
+                        Vegan
+                    </label>
+                    <label class="custom-checkbox">
+                        <input id="special-gluten" type="checkbox" value="gluten free">
+                        <span class="checkmark"></span>
+                        <i class="fa-solid fa-wheat-awn" style="margin-right: 10px; color: wheat"></i>
+                        Gluten-Free
+                    </label>
+                    <label class="custom-checkbox">
+                        <input id="special-keto" type="checkbox" value="ketogenic">
+                        <span class="checkmark"></span>
+                        <i class="fa-solid fa-cheese" style="margin-right: 10px; color: yellow"></i>
+                        Keto-Friendly
+                    </label>
+                </div>
+            </div>
+            <div class="search-frontpage-a">
                 <div id="prompt-container">
                     <i class="far fa-lightbulb" style="margin-top:15px; margin-right:15px;"></i>
                     <p id="prompt-label"></p>
                 </div>
-                <div id="search-frontpage-options">
+                <div class="search-frontpage-options">
                     <label class="custom-radio">
                         <input id="basic-search" type="radio" name="options" checked="true">
                         <span class="radiomark"></span>
@@ -63,9 +85,10 @@
                         Advanced Search
                     </label>
                     <label class="custom-checkbox">
-                        <input id="different-cuisines" type="checkbox" name="options">
+                        <input id="different-cuisines" type="checkbox">
                         <span class="checkmark"></span>
                         Try different cuisines
+                        <i class="fa-solid fa-flask" style="margin-left: 10px;"></i>
                     </label>
                 </div>
                 <input id="advanced-input" type="text" placeholder="Main ingredients to use..." hidden="true">
@@ -75,7 +98,7 @@
             <div style="margin-top:50px; text-align: center;">
                 <h1>Cook Something New, Anytime.</h1>
                 <p>Tired of the same meals every week? Want something quick, exciting, or totally unexpected?</p>
-                <p>Whether you’re planning dinner, need a fast snack, or want to try a dish from another culture,<br></p>
+                <p>Whether you're planning dinner, need a fast snack, or want to try a dish from another culture,<br></p>
                 <p><strong><em>Let There Be Bite</em></strong> helps you discover something new.</p>
                 <p>No more digging through old cookbooks or endless scrolling online.</p>
                 <h1 style="margin-top: 80px;">How It Works</h1>
@@ -116,6 +139,7 @@
                     <div class="homepage-info-steps">
                         <i class="fas fa-globe-americas" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
                         <h2>Try different cuisines</h2><br>
+                        <em>(Experimental)</em><br>
                         You have the option to generate your recipes with a creative spin using cuisines from all around the world!
                     </div>
                 </div>
