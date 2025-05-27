@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newItem = document.createElement("button");
         newItem.className = "item";
 
-        if (localStorage.getItem("apiMode") === "groq") {
+        if (localStorage.getItem("apiMode").includes("groq")) {
             let blackStars = "";
             let whiteStars = "";
             for (let i = 0; i < recipe.difficulty; i++) blackStars += "★";
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><em>${recipe.description}</em></p>
             <p>${recipe.cuisine ? `<strong>Cuisine: </strong>${recipe.cuisine} | ` : ``}<strong>Difficulty: </strong>${blackStars}${whiteStars} | <strong>Prep Time: </strong>${recipe.prep_time}</p>
             `;
-        } else if (localStorage.getItem("apiMode") === "spoonacular") {
+        } else if (localStorage.getItem("apiMode").includes("spoonacular")) {
             newItem.innerHTML =
             `
             <h3>${recipe.title}</h3>

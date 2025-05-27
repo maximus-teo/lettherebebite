@@ -27,12 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
         selectedRecipe = JSON.parse(localStorage.getItem("selectedRecipe"));
         console.log("selectedRecipe:", selectedRecipe);
+        console.log("apiMode:", localStorage.getItem("apiMode"))
     } catch (err) {
         console.error("Failed to parse JSON:", err);
         return;
     }
 
-    if (localStorage.getItem("apiMode") === "groq") {
+    if (localStorage.getItem("apiMode").includes("groq")) {
         let blackStars = "";
         let whiteStars = "";
         for (let i = 0; i < selectedRecipe.difficulty; i++) blackStars += "★";
@@ -71,7 +72,26 @@ document.addEventListener('DOMContentLoaded', () => {
         </ol>
         <hr>\
         `;
-    } else if (localStorage.getItem("apiMode") === "spoonacular") {
+    } else if (localStorage.getItem("apiMode").includes("spoonacular")) {
+        // if result is sourced from spoonacular, fetch ingredients by using its recipe ID
+        try {
+            const response = fetch(`${backendURL}/api/spoon-ingredients-id`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: selectedRecipe.id })
+            });
+
+            console.log("Spoonacular (ingredients-id) raw response: ", response);
+            if (!response.ok) throw new Error("Failed to load recipe");
+
+            const data = response.json();
+            console.log(data);
+            localStorage.setItem("extendedIngredients", JSON.stringify(data.extendedIngredients));
+            console.log(localStorage.getItem("extendedIngredients"));
+        } catch (err) {
+            console.log(err);
+        }
+
         recipeText.innerHTML =
         `
         <h1>${selectedRecipe.title}</h1>
@@ -110,9 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    localStorage.removeItem("dishNutrition");
-    if (!localStorage.getItem("dishNutrition")) {
+    if (!localStorage.getItem("dishNutrition") || document.getElementById("nutrition-text").innerHTML !== localStorage.getItem("dishNutrition")) {
         fetchNutrition();
+        console.log("api used")
+    } else {
+        document.getElementById("nutrition-text").innerHTML = localStorage.getItem("dishNutrition");
+        console.log("sourced from localStorage")
     }
 
 });
@@ -120,16 +143,29 @@ document.addEventListener('DOMContentLoaded', () => {
 const backendURL = "http://localhost:3000";//"https://lettherebebite.onrender.com";
 
 async function fetchNutrition() {
+    console.log("fetchNutrition for:", selectedRecipe.title);
     try {
-        const response = await fetch(`${backendURL}/api/spoon-nutrition`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                title: selectedRecipe.title,
-                servings: 1,
-                ingredients: selectedRecipe.ingredients,
-            })
-        });
+        let response;
+        if (localStorage.getItem("apiMode").includes("groq")) {
+            response = await fetch(`${backendURL}/api/spoon-nutrition`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title: selectedRecipe.title,
+                    servings: 1,
+                    ingredients: selectedRecipe.ingredients,
+                })
+            });
+        } else if (localStorage.getItem("apiMode").includes("spoonacular")) {
+            console.log("id: ", selectedRecipe.id)
+            response = await fetch(`${backendURL}/api/spoon-nutrition-id`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: selectedRecipe.id
+                })
+            });
+        }
 
         if (!response.ok) {
             const errorText = await response.text();
@@ -138,8 +174,9 @@ async function fetchNutrition() {
         
         const html = await response.text();
         document.getElementById("nutrition-text").innerHTML = html;
+        localStorage.setItem("dishNutrition", html);
     } catch (err) {
-        alert("Error: " + err.message);
+        console.log("Error in fetchNutrition(): " + err.message);
     }
 }
 

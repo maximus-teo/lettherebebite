@@ -6,6 +6,8 @@ Let There Be Bite is an AI-powered recipe generation web app that helps users cr
 ## 🌐 Live Site
 To test out LTBB, visit https://maximus-teo.github.io/lettherebebite
 
+![demo screenshot](./images/ltbb_screenshot.png)
+
 ## Features
 + AI-generated recipes using natural language input
 + Recipes are generated with variety in ingredients and cuisines

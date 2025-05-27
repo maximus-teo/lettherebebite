@@ -214,7 +214,7 @@ app.post("/api/spoon-recipe", async (req, res) => {
 });
 
 app.post('/api/spoon-nutrition', async (req, res) => {
-    const { title, servings, ingredients, instructions } = req.body;
+    const { title, servings, ingredients } = req.body;
 
     const ingredientList = Array.isArray(ingredients)
     ? ingredients.map(i => i.trim()).join('\n')
@@ -251,6 +251,52 @@ app.post('/api/spoon-nutrition', async (req, res) => {
         res.status(500).send(`<p>Error: ${err.message}</p>`);
     }
 });
+
+app.post('/api/spoon-nutrition-id', async (req, res) => {
+    const { id } = req.body;
+
+    try {
+        const response = await fetch(`https://api.spoonacular.com/food/menuItems/${id}/nutritionWidget?defaultCss=true`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'text/html',
+                "x-api-key": spoonacularApiKey
+            }
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Spoonacular API (nutrition-id) failed: ${errorText}`);
+        }
+
+        const html = await response.text();
+        res.send(html);
+
+    } catch (err) {
+        res.status(500).send(`<p>Error: ${err.message}</p>`);
+    }
+});
+
+app.post('/api/spoon-ingredients-id', async (req, res) => {
+    const { id } = req.body;
+
+    try {
+        const response = await fetch(`https://api.spoonacular.com/recipes/${id}/information`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "x-api-key": spoonacularApiKey
+            }
+        });
+        
+        const data = await response.json();
+        res.json(data);
+
+    } catch (err) {
+        console.error("Error: ", err);
+        res.status(500).json({ error: "Spoonacular: failed to generate ingredients." });
+    }
+})
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
