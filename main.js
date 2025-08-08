@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(spinningFavicon);
         if (originalFavicon) originalFavicon.remove();
     
-        const backendURL = "http://localhost:3000";//"https://lettherebebite.onrender.com";
+        const backendURL = "https://lettherebebite.onrender.com"; //"http://localhost:3000"
 
         try {
             localStorage.setItem("dishName", dishName);
