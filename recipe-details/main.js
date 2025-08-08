@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-const backendURL = "http://localhost:3000";//"https://lettherebebite.onrender.com";
+const backendURL = "https://lettherebebite.onrender.com"; //"http://localhost:3000"
 
 async function fetchNutrition() {
     console.log("fetchNutrition for:", selectedRecipe.title);
